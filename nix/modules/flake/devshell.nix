@@ -5,7 +5,7 @@
   perSystem = { config, pkgs, ... }: {
     # Default shell.
     devShells.default = pkgs.mkShell {
-      name = "haskell-template";
+      name = "hint-demo";
       meta.description = "Haskell development environment";
 
       # See https://community.flake.parts/haskell-flake/devshell#composing-devshells

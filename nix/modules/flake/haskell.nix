@@ -16,7 +16,7 @@
         inherit root;
         fileset = lib.fileset.unions [
           (root + /src)
-          (root + /haskell-template.cabal)
+          (root + /hint-demo.cabal)
           (root + /LICENSE)
           (root + /README.md)
         ];
@@ -37,7 +37,7 @@
 
       # Add your package overrides here
       settings = {
-        haskell-template = {
+        hint-demo = {
           stan = true;
           # haddock = false;
         };
@@ -53,7 +53,7 @@
     };
 
     # Default package & app.
-    packages.default = self'.packages.haskell-template;
-    apps.default = self'.apps.haskell-template;
+    packages.default = self'.packages.hint-demo;
+    apps.default = self'.apps.hint-demo;
   };
 }

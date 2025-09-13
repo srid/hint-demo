@@ -1,12 +1,12 @@
 cabal-version:      2.4
-name:               haskell-template
+name:               hint-demo
 version:            0.1.0.0
 license:            MIT
 copyright:          2022 Sridhar Ratnakumar
 maintainer:         srid@srid.ca
 author:             Sridhar Ratnakumar
 category:           Web
-homepage:           https://srid.ca/haskell-template
+homepage:           https://srid.ca/hint-demo
 
 -- TODO: Before hackage release.
 -- A short (one-line) description of the package.
@@ -63,6 +63,6 @@ common shared
   hs-source-dirs:     src
   default-language:   GHC2021
 
-executable haskell-template
+executable hint-demo
   import:  shared
   main-is: Main.hs
