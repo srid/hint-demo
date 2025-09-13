@@ -1,0 +1,68 @@
+cabal-version:      2.4
+name:               haskell-template
+version:            0.1.0.0
+license:            MIT
+copyright:          2022 Sridhar Ratnakumar
+maintainer:         srid@srid.ca
+author:             Sridhar Ratnakumar
+category:           Web
+homepage:           https://srid.ca/haskell-template
+
+-- TODO: Before hackage release.
+-- A short (one-line) description of the package.
+synopsis:           A template for Haskell projects using Nix
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+extra-source-files:
+  LICENSE
+  README.md
+
+common shared
+  ghc-options:
+    -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns
+    -Wmissing-deriving-strategies -Wunused-foralls -Wunused-foralls
+    -fprint-explicit-foralls -fprint-explicit-kinds -Werror
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude, Relude.Container.One),
+    relude
+
+  default-extensions:
+    DataKinds
+    DerivingStrategies
+    DerivingVia
+    LambdaCase
+    MultiWayIf
+    NoStarIsType
+    OverloadedStrings
+    StrictData
+    TypeFamilies
+    ViewPatterns
+
+  build-depends:
+    , aeson
+    , async
+    , base          >=4   && <5
+    , data-default
+    , directory
+    , filepath
+    , mtl
+    , optics-core
+    , profunctors
+    , relude        >=1.0
+    , shower
+    , time
+    , with-utf8
+
+  hs-source-dirs:     src
+  default-language:   GHC2021
+
+executable haskell-template
+  import:  shared
+  main-is: Main.hs
