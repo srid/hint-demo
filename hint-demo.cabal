@@ -2,11 +2,10 @@ cabal-version:      2.4
 name:               hint-demo
 version:            0.1.0.0
 license:            MIT
-copyright:          2022 Sridhar Ratnakumar
+copyright:          2025 Sridhar Ratnakumar
 maintainer:         srid@srid.ca
 author:             Sridhar Ratnakumar
 category:           Web
-homepage:           https://srid.ca/hint-demo
 
 -- TODO: Before hackage release.
 -- A short (one-line) description of the package.
@@ -52,6 +51,7 @@ common shared
     , data-default
     , directory
     , filepath
+    , hint
     , mtl
     , optics-core
     , profunctors

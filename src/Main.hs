@@ -1,20 +1,25 @@
 module Main where
 
+import Language.Haskell.Interpreter
 import Main.Utf8 qualified as Utf8
 
-data Example = Example
-  { name :: Text
-  , age :: Int
-  }
-  deriving stock (Show, Eq)
+-- Load and evaluate expressions from config.hs
+loadConfig :: IO ()
+loadConfig = do
+  configContent <- decodeUtf8 <$> readFileBS "./config.hs"
+  result <- runInterpreter $ do
+    setImports ["Prelude"]
 
-{- |
- Main entry point.
+    -- Interpret the config file as a function that takes two Ints and returns a String
+    configFunc <- interpret configContent (as :: Int -> Int -> String)
+    return $ configFunc 10 5
 
- `just run` will invoke this function.
--}
+  case result of
+    Left err -> putTextLn $ "Error loading config: " <> show err
+    Right value -> putTextLn $ "Config result: " <> toText value
+
 main :: IO ()
 main = do
-  -- For withUtf8, see https://serokell.io/blog/haskell-with-utf8
   Utf8.withUtf8 $ do
-    putTextLn "Hello 🌎 (from hint-demo)"
+    putTextLn "Loading configuration using hint library..."
+    loadConfig

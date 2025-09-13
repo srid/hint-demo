@@ -1,0 +1,1 @@
+- Test every code change by running the program: `cabal run` in Nix devShell
