@@ -15,10 +15,10 @@
       projectRoot = builtins.toString (lib.fileset.toSource {
         inherit root;
         fileset = lib.fileset.unions [
-          (root + /src)
-          (root + /hint-demo.cabal)
-          (root + /LICENSE)
-          (root + /README.md)
+          (lib.fileset.maybeMissing (root + /packages))
+          (lib.fileset.maybeMissing (root + /cabal.project))
+          (lib.fileset.maybeMissing (root + /LICENSE))
+          (lib.fileset.maybeMissing (root + /README.md))
         ];
       });
 
@@ -29,6 +29,10 @@
       packages = {
         # Add source or Hackage overrides here
         # (Local packages are added automatically)
+
+        # Force hint to be rebuilt with current package set to avoid package ID mismatches
+        hint.source = "0.9.0.8"; # Use Hackage version but rebuild with current deps
+
         /*
         aeson.source = "1.5.0.0" # Hackage version
         shower.source = inputs.shower; # Flake input
@@ -37,10 +41,50 @@
 
       # Add your package overrides here
       settings = {
-        hint-demo = {
+        hint-demo = { self, super, ... }: {
           stan = true;
           # haddock = false;
+          # Fix hint package database issues by ensuring it finds the correct GHC environment
+          custom = pkg:
+            let
+              # Create a GHC environment with all the packages hint needs
+              ghcWithPackages = super.ghcWithPackages (ps: with ps; [
+                base
+                aeson
+                async
+                data-default
+                directory
+                filepath
+                hint
+                mtl
+                optics-core
+                profunctors
+                relude
+                shower
+                time
+                with-utf8
+                hint-demo-types
+              ]);
+            in
+            pkg.overrideAttrs (old: {
+              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+                pkgs.makeWrapper
+              ];
+              postInstall = (old.postInstall or "") + ''
+                # Wrap the executable to set GHC_LIB_DIR for hint library
+                wrapProgram $out/bin/hint-demo \
+                  --set GHC_LIB_DIR "${super.ghc}/lib/ghc-${super.ghc.version}/lib" \
+                  --set GHC_PACKAGE_PATH "${ghcWithPackages}/lib/ghc-${super.ghc.version}/lib/package.conf.d"
+              '';
+            });
         };
+        hint-demo-types = {
+          stan = true;
+        };
+        hint = {
+          check = false; # Disable tests to avoid Nix build issues
+        };
+
         /*
         aeson = {
           check = false;

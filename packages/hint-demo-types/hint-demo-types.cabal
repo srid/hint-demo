@@ -1,0 +1,43 @@
+cabal-version: 2.4
+name:          hint-demo-types
+version:       0.1.0.0
+license:       MIT
+copyright:     2025 Sridhar Ratnakumar
+maintainer:    srid@srid.ca
+author:        Sridhar Ratnakumar
+category:      Web
+synopsis:      Types for hint-demo
+
+common shared
+  ghc-options:
+    -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns
+    -Wunused-foralls -Wunused-foralls -fprint-explicit-foralls
+    -fprint-explicit-kinds -Werror
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude, Relude.Container.One),
+    relude
+
+  default-extensions:
+    DataKinds
+    DerivingStrategies
+    DerivingVia
+    LambdaCase
+    MultiWayIf
+    NoStarIsType
+    OverloadedStrings
+    StrictData
+    TypeFamilies
+    ViewPatterns
+
+  build-depends:
+    , base    >=4   && <5
+    , relude  >=1.0
+
+  hs-source-dirs:     src
+  default-language:   GHC2021
+
+library
+  import:          shared
+  exposed-modules: HintDemo.Types

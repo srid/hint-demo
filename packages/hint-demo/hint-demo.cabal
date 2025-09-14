@@ -18,8 +18,7 @@ synopsis:           A template for Haskell projects using Nix
 -- bug-reports:
 
 extra-source-files:
-  LICENSE
-  README.md
+data-files:         config.hs
 
 common shared
   ghc-options:
@@ -47,15 +46,16 @@ common shared
   build-depends:
     , aeson
     , async
-    , base          >=4   && <5
+    , base             >=4   && <5
     , data-default
     , directory
     , filepath
     , hint
+    , hint-demo-types
     , mtl
     , optics-core
     , profunctors
-    , relude        >=1.0
+    , relude           >=1.0
     , shower
     , time
     , with-utf8
@@ -64,5 +64,6 @@ common shared
   default-language:   GHC2021
 
 executable hint-demo
-  import:  shared
-  main-is: Main.hs
+  import:        shared
+  main-is:       Main.hs
+  other-modules: Paths_hint_demo
