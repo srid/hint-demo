@@ -30,11 +30,6 @@
         # Add source or Hackage overrides here
         # (Local packages are added automatically)
 
-        # Force hint to be rebuilt with current package set to avoid package ID mismatches
-        hint.source = "0.9.0.8"; # Use Hackage version but rebuild with current deps
-
-        # Add include-env for Template Haskell environment variable embedding
-        include-env.source = "0.5.0.0";
 
         /*
         aeson.source = "1.5.0.0" # Hackage version
