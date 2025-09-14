@@ -1,11 +1,18 @@
 module Main where
 
 import HintDemo.Types
+import IncludeEnv.TH
 import Language.Haskell.Interpreter
 import Language.Haskell.Interpreter.Unsafe
 import Main.Utf8 qualified as Utf8
 import Paths_hint_demo (getDataFileName)
 
+-- Embed environment variables at compile time
+$(includeEnv "GHC_LIB_DIR" "ghcLibDir")
+ghcLibDir :: String
+
+$(includeEnv "GHC_PACKAGE_PATH" "ghcPackagePath")
+ghcPackagePath :: String
 -- Load and evaluate expressions from config.hs
 loadConfig :: IO ()
 loadConfig = do
@@ -28,20 +35,13 @@ loadConfig = do
 -- Helper function to run interpreter with proper package database
 runInterpreterWithPackageDb :: InterpreterT IO a -> IO (Either InterpreterError a)
 runInterpreterWithPackageDb action = do
-  mLibDir <- lookupEnv "GHC_LIB_DIR"
-  mPkgPath <- lookupEnv "GHC_PACKAGE_PATH"
-  case (mLibDir, mPkgPath) of
-    (Just libDir, Just pkgPath) ->
-      unsafeRunInterpreterWithArgsLibdir
-        ["-package-db", pkgPath, "-hide-all-packages", "-package", "base", "-package", "hint-demo-types"]
-        libDir
-        action
-    _ ->
-      -- Fallback to standard interpreter
-      runInterpreter action
+  unsafeRunInterpreterWithArgsLibdir
+    ["-package-db", ghcPackagePath, "-hide-all-packages", "-package", "base", "-package", "hint-demo-types"]
+    ghcLibDir
+    action
 
 main :: IO ()
 main = do
   Utf8.withUtf8 $ do
-    putTextLn "Loading configuration using hint library..."
+    putTextLn "Loading configuration using include-env and hint..."
     loadConfig

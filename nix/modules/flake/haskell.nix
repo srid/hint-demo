@@ -33,6 +33,9 @@
         # Force hint to be rebuilt with current package set to avoid package ID mismatches
         hint.source = "0.9.0.8"; # Use Hackage version but rebuild with current deps
 
+        # Add include-env for Template Haskell environment variable embedding
+        include-env.source = "0.5.0.0";
+
         /*
         aeson.source = "1.5.0.0" # Hackage version
         shower.source = inputs.shower; # Flake input
@@ -56,25 +59,23 @@
                 directory
                 filepath
                 hint
+                hint-demo-types
+                include-env
                 mtl
                 optics-core
                 profunctors
                 relude
                 shower
+                template-haskell
                 time
                 with-utf8
-                hint-demo-types
               ]);
             in
             pkg.overrideAttrs (old: {
-              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-                pkgs.makeWrapper
-              ];
-              postInstall = (old.postInstall or "") + ''
-                # Wrap the executable to set GHC_LIB_DIR for hint library
-                wrapProgram $out/bin/hint-demo \
-                  --set GHC_LIB_DIR "${super.ghc}/lib/ghc-${super.ghc.version}/lib" \
-                  --set GHC_PACKAGE_PATH "${ghcWithPackages}/lib/ghc-${super.ghc.version}/lib/package.conf.d"
+              # Set environment variables for include-env during build phase
+              preBuild = (old.preBuild or "") + ''
+                export GHC_LIB_DIR="${super.ghc}/lib/ghc-${super.ghc.version}/lib"
+                export GHC_PACKAGE_PATH="${ghcWithPackages}/lib/ghc-${super.ghc.version}/lib/package.conf.d"
               '';
             });
         };

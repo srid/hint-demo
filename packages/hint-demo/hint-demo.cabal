@@ -40,23 +40,26 @@ common shared
     NoStarIsType
     OverloadedStrings
     StrictData
+    TemplateHaskell
     TypeFamilies
     ViewPatterns
 
   build-depends:
     , aeson
     , async
-    , base             >=4   && <5
+    , base              >=4   && <5
     , data-default
     , directory
     , filepath
     , hint
     , hint-demo-types
+    , include-env
     , mtl
     , optics-core
     , profunctors
-    , relude           >=1.0
+    , relude            >=1.0
     , shower
+    , template-haskell
     , time
     , with-utf8
 
