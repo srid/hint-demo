@@ -70,4 +70,6 @@ common shared
 executable hint-demo
   import:        shared
   main-is:       Main.hs
-  other-modules: Paths_hint_demo
+  other-modules:
+    HintDemo.Nix
+    Paths_hint_demo
