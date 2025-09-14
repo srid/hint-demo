@@ -13,6 +13,11 @@
         optics-core
         optics-th
       ]);
+      # Environment variables required for `hint` to work correctly with our config.hs
+      hintAttrs = rec {
+        HINT_GHC_LIB_DIR = "${hintGhc}/lib/${hintGhc.meta.name}/lib";
+        HINT_GHC_PACKAGE_PATH = "${HINT_GHC_LIB_DIR}/package.conf.d";
+      };
     in
     {
       # Our only Haskell project. You can have multiple projects, but this template
@@ -34,14 +39,7 @@
         # Add your package overrides here
         settings = {
           hint-demo = {
-            # haddock = false;
-            custom = pkg: pkg.overrideAttrs (old: {
-              # Set environment variables for include-env during build phase
-              preBuild = (old.preBuild or "") + ''
-                export HINT_GHC_LIB_DIR="${hintGhc}/lib/ghc-${hintGhc.version}/lib"
-                export HINT_GHC_PACKAGE_PATH="${hintGhc}/lib/ghc-${hintGhc.version}/lib/package.conf.d"
-              '';
-            });
+            drvAttrs = hintAttrs;
           };
         };
 
@@ -52,12 +50,8 @@
       # Default package & app.
       packages.default = self'.packages.hint-demo;
       apps.default = self'.apps.hint-demo;
-      devShells.hint = pkgs.mkShell {
+      devShells.hint = pkgs.mkShell (hintAttrs // {
         name = "hint-demo-devshell";
-        shellHook = ''
-          export HINT_GHC_LIB_DIR="${hintGhc}/lib/ghc-${hintGhc.version}/lib";
-          export HINT_GHC_PACKAGE_PATH="${hintGhc}/lib/ghc-${hintGhc.version}/lib/package.conf.d";
-        '';
-      };
+      });
     };
 }
