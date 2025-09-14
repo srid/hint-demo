@@ -5,11 +5,11 @@
   imports = [
     inputs.haskell-flake.flakeModule
   ];
-  perSystem = { self', lib, config, pkgs, ... }: {
+  perSystem = { self', lib, ... }: {
     # Our only Haskell project. You can have multiple projects, but this template
     # has only one.
     # See https://github.com/srid/haskell-flake/blob/master/example/flake.nix
-    haskellProjects.default = {
+    haskellProjects.default = { config, ... }: {
       # To avoid unnecessary rebuilds, we filter projectRoot:
       # https://community.flake.parts/haskell-flake/local#rebuild
       projectRoot = builtins.toString (lib.fileset.toSource {
@@ -22,70 +22,25 @@
         ];
       });
 
-      # The base package set (this value is the default)
-      # basePackages = pkgs.haskellPackages;
-
-      # Packages to add on top of `basePackages`
-      packages = {
-        # Add source or Hackage overrides here
-        # (Local packages are added automatically)
-
-
-        /*
-        aeson.source = "1.5.0.0" # Hackage version
-        shower.source = inputs.shower; # Flake input
-        */
-      };
-
       # Add your package overrides here
       settings = {
-        hint-demo = { self, super, ... }: {
-          stan = true;
+        hint-demo = {
           # haddock = false;
-          # Fix hint package database issues by ensuring it finds the correct GHC environment
           custom = pkg:
             let
-              # Create a GHC environment with all the packages hint needs
-              ghcWithPackages = super.ghcWithPackages (ps: with ps; [
-                base
-                aeson
-                async
-                data-default
-                directory
-                filepath
-                hint
+              # Create a GHC environment with the packages we need
+              hintGhc = config.outputs.finalPackages.ghcWithPackages (ps: with ps; [
                 hint-demo-types
-                include-env
-                mtl
-                optics-core
-                profunctors
-                relude
-                shower
-                template-haskell
-                time
-                with-utf8
               ]);
             in
             pkg.overrideAttrs (old: {
               # Set environment variables for include-env during build phase
               preBuild = (old.preBuild or "") + ''
-                export GHC_LIB_DIR="${super.ghc}/lib/ghc-${super.ghc.version}/lib"
-                export GHC_PACKAGE_PATH="${ghcWithPackages}/lib/ghc-${super.ghc.version}/lib/package.conf.d"
+                export GHC_LIB_DIR="${hintGhc}/lib/ghc-${hintGhc.version}/lib"
+                export GHC_PACKAGE_PATH="${hintGhc}/lib/ghc-${hintGhc.version}/lib/package.conf.d"
               '';
             });
         };
-        hint-demo-types = {
-          stan = true;
-        };
-        hint = {
-          check = false; # Disable tests to avoid Nix build issues
-        };
-
-        /*
-        aeson = {
-          check = false;
-        };
-        */
       };
 
       # What should haskell-flake add to flake outputs?
