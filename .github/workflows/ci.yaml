@@ -14,8 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@v33
-        with:
-          nix_version: "2.31.0"
       - name: Install omnix
         run: nix profile install nixpkgs#omnix
       - name: Build all flake outputs

@@ -22,8 +22,12 @@
           };
         };
       };
-      devShells.hint = pkgs.mkShell (hintAttrs // {
+      devShells.hint = pkgs.mkShell {
         name = "hint-demo-devshell";
-      });
+        shellHook = ''
+          ${pkgs.lib.concatMapStringsSep "\n  " (attrs: "export ${attrs}=\"${hintAttrs.${attrs}}\"") (pkgs.lib.attrNames hintAttrs)}
+          env | grep ^HINT_
+        '';
+      };
     };
 }
