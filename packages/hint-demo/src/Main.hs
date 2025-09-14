@@ -1,8 +1,8 @@
 module Main where
 
-import HintDemo.Nix
-import HintDemo.Types
-import Language.Haskell.Interpreter
+import HintDemo.Nix (runInterpreterWithNixPackageDb)
+import HintDemo.Types (Config (Config))
+import Language.Haskell.Interpreter qualified as H
 import Main.Utf8 qualified as Utf8
 import Paths_hint_demo (getDataFileName)
 
@@ -15,18 +15,20 @@ loadConfig = do
 
   result <- runInterpreterWithNixPackageDb $ do
     -- Import the types from the hint-demo-types package
-    setImports ["Prelude", "HintDemo.Types", "Optics.Core"]
+    H.setImports ["Prelude", "HintDemo.Types", "Optics.Core"]
 
     -- Enable OverloadedLabels extension
-    set [languageExtensions := [OverloadedLabels]]
+    H.set [H.languageExtensions H.:= [H.OverloadedLabels]]
 
     -- Interpret the config function
-    configFunc <- interpret configContent (as :: Config -> Config)
+    configFunc <- H.interpret configContent (H.as :: Config -> Config)
     return $ configFunc initialConfig
 
   case result of
-    Left err -> putTextLn $ "Error loading config: " <> show err
-    Right updatedConfig -> putTextLn $ "Updated config: " <> show updatedConfig
+    Left err -> die $ "Interpreter error: " ++ show err
+    Right v -> do
+      putTextLn $ "Original: " <> show initialConfig
+      putTextLn $ " Updated: " <> show v
 
 main :: IO ()
 main = do
