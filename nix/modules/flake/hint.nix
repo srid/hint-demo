@@ -1,5 +1,5 @@
 {
-  perSystem = { config, pkgs, ... }:
+  perSystem = { config, pkgs, lib, ... }:
     let
       # Create a GHC environment with the packages we need
       hintGhc = config.haskellProjects.default.outputs.finalPackages.ghcWithPackages (ps: with ps; [
@@ -23,7 +23,9 @@
       devShells.hint = pkgs.mkShell {
         name = "hint-demo-devshell";
         shellHook = ''
-          ${pkgs.lib.concatMapStringsSep "\n  " (attrs: "export ${attrs}=\"${hintAttrs.${attrs}}\"") (pkgs.lib.attrNames hintAttrs)}
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (name: value: "export ${name}=${value}") hintAttrs
+          )}
           env | grep ^HINT_
         '';
       };
