@@ -1,3 +1,3 @@
 \config -> config
-  & #value %~ (* 2)
+  & #when %~ addDays 1
   & #name %~ (++ "_updated")

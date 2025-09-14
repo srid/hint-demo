@@ -1,5 +1,6 @@
 module Main where
 
+import Data.Time.Calendar (fromGregorian)
 import HintDemo.Nix (runInterpreterWithNixPackageDb)
 import HintDemo.Types (Config (Config))
 import Language.Haskell.Interpreter qualified as H
@@ -11,11 +12,11 @@ loadConfig :: IO ()
 loadConfig = do
   configPath <- getDataFileName "config.hs"
   configContent <- decodeUtf8 <$> readFileBS configPath
-  let initialConfig = Config "initial" 42
+  let initialConfig = Config "initial" (fromGregorian 2025 1 1)
 
   result <- runInterpreterWithNixPackageDb $ do
     -- Import the types from the hint-demo-types package
-    H.setImports ["Prelude", "HintDemo.Types", "Optics.Core"]
+    H.setImports ["Prelude", "HintDemo.Types", "Optics.Core", "Data.Time.Calendar"]
 
     -- Enable OverloadedLabels extension
     H.set [H.languageExtensions H.:= [H.OverloadedLabels]]
