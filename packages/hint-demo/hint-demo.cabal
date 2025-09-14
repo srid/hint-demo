@@ -2,11 +2,10 @@ cabal-version:      2.4
 name:               hint-demo
 version:            0.1.0.0
 license:            MIT
-copyright:          2022 Sridhar Ratnakumar
+copyright:          2025 Sridhar Ratnakumar
 maintainer:         srid@srid.ca
 author:             Sridhar Ratnakumar
 category:           Web
-homepage:           https://srid.ca/hint-demo
 
 -- TODO: Before hackage release.
 -- A short (one-line) description of the package.
@@ -19,8 +18,7 @@ synopsis:           A template for Haskell projects using Nix
 -- bug-reports:
 
 extra-source-files:
-  LICENSE
-  README.md
+data-files:         config.hs
 
 common shared
   ghc-options:
@@ -40,23 +38,29 @@ common shared
     LambdaCase
     MultiWayIf
     NoStarIsType
+    OverloadedLabels
     OverloadedStrings
     StrictData
+    TemplateHaskell
     TypeFamilies
     ViewPatterns
 
   build-depends:
     , aeson
     , async
-    , base          >=4   && <5
+    , base              >=4   && <5
     , data-default
     , directory
     , filepath
+    , hint
+    , hint-demo-types
+    , include-env
     , mtl
     , optics-core
     , profunctors
-    , relude        >=1.0
+    , relude            >=1.0
     , shower
+    , template-haskell
     , time
     , with-utf8
 
@@ -64,5 +68,6 @@ common shared
   default-language:   GHC2021
 
 executable hint-demo
-  import:  shared
-  main-is: Main.hs
+  import:        shared
+  main-is:       Main.hs
+  other-modules: Paths_hint_demo
