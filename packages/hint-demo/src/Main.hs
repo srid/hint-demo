@@ -8,10 +8,10 @@ import Main.Utf8 qualified as Utf8
 import Paths_hint_demo (getDataFileName)
 
 -- Embed environment variables at compile time
-$(includeEnv "GHC_LIB_DIR" "ghcLibDir")
+$(includeEnv "HINT_GHC_LIB_DIR" "ghcLibDir")
 ghcLibDir :: String
 
-$(includeEnv "GHC_PACKAGE_PATH" "ghcPackagePath")
+$(includeEnv "HINT_GHC_PACKAGE_PATH" "ghcPackagePath")
 ghcPackagePath :: String
 -- Load and evaluate expressions from config.hs
 loadConfig :: IO ()
