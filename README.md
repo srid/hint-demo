@@ -3,7 +3,7 @@
 Nix-based demo of Haskell's `hint` library
 
 > [!WARNING]
-> This repo is a work-in-progress.
+> While this repo is currently functional, it may undergo substantial changes.
 
 ## Using hint with external libraries
 
