@@ -39,7 +39,7 @@ loadConfig = do
 runInterpreterWithPackageDb :: InterpreterT IO a -> IO (Either InterpreterError a)
 runInterpreterWithPackageDb action = do
   unsafeRunInterpreterWithArgsLibdir
-    ["-package-db", ghcPackagePath, "-hide-all-packages", "-package", "base", "-package", "hint-demo-types", "-package", "optics-core"]
+    ["-package-db", ghcPackagePath]
     ghcLibDir
     action
 
