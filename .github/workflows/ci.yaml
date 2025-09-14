@@ -20,5 +20,5 @@ jobs:
           nix --version
       - name: Build all flake outputs
         run: om ci
-      - name: What GHC version?
-        run: nix develop -c ghc --version
+      - name: Run it
+        run: nix run
