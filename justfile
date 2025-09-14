@@ -12,4 +12,4 @@ repl *ARGS:
 
 # Run ghcid -- auto-recompile and run `main` function
 run:
-    ghcid -T :main
+    ghcid -c 'cabal repl hint-demo' -T :main
