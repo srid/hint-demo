@@ -1,1 +1,3 @@
-\config -> config {configValue = configValue config * 2, configName = configName config ++ "_updated"}
+\config -> config
+  & #configValue %~ (* 2)
+  & #configName %~ (++ "_updated")

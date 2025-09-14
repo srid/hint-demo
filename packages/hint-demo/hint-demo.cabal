@@ -38,6 +38,7 @@ common shared
     LambdaCase
     MultiWayIf
     NoStarIsType
+    OverloadedLabels
     OverloadedStrings
     StrictData
     TemplateHaskell

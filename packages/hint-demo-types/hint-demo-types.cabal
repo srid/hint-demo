@@ -21,19 +21,25 @@ common shared
 
   default-extensions:
     DataKinds
+    DeriveGeneric
     DerivingStrategies
     DerivingVia
     LambdaCase
     MultiWayIf
     NoStarIsType
+    OverloadedLabels
     OverloadedStrings
     StrictData
+    TemplateHaskell
     TypeFamilies
+    UndecidableInstances
     ViewPatterns
 
   build-depends:
-    , base    >=4   && <5
-    , relude  >=1.0
+    , base         >=4   && <5
+    , optics-core
+    , optics-th
+    , relude       >=1.0
 
   hs-source-dirs:     src
   default-language:   GHC2021

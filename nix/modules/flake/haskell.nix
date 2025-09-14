@@ -31,6 +31,8 @@
               # Create a GHC environment with the packages we need
               hintGhc = config.outputs.finalPackages.ghcWithPackages (ps: with ps; [
                 hint-demo-types
+                optics-core
+                optics-th
               ]);
             in
             pkg.overrideAttrs (old: {

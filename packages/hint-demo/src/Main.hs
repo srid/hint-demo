@@ -22,7 +22,10 @@ loadConfig = do
 
   result <- runInterpreterWithPackageDb $ do
     -- Import the types from the hint-demo-types package
-    setImports ["Prelude", "HintDemo.Types"]
+    setImports ["Prelude", "HintDemo.Types", "Optics.Core"]
+
+    -- Enable OverloadedLabels extension
+    set [languageExtensions := [OverloadedLabels]]
 
     -- Interpret the config function
     configFunc <- interpret configContent (as :: Config -> Config)
@@ -36,7 +39,7 @@ loadConfig = do
 runInterpreterWithPackageDb :: InterpreterT IO a -> IO (Either InterpreterError a)
 runInterpreterWithPackageDb action = do
   unsafeRunInterpreterWithArgsLibdir
-    ["-package-db", ghcPackagePath, "-hide-all-packages", "-package", "base", "-package", "hint-demo-types"]
+    ["-package-db", ghcPackagePath, "-hide-all-packages", "-package", "base", "-package", "hint-demo-types", "-package", "optics-core"]
     ghcLibDir
     action
 
