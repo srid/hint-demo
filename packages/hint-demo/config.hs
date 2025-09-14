@@ -1,3 +1,3 @@
 \config -> config
-  & #configValue %~ (* 2)
-  & #configName %~ (++ "_updated")
+  & #value %~ (* 2)
+  & #name %~ (++ "_updated")
