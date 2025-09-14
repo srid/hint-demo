@@ -1,2 +1,3 @@
 # hint-demo
-See https://srid.ca/haskell-template/start
+
+Nix-based demo of Haskell's `hint` library
