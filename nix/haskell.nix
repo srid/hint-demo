@@ -1,6 +1,9 @@
 # haskell-flake configuration goes in this module.
 
-{ root, inputs, ... }:
+{ inputs, ... }:
+let
+  root = ../.;
+in
 {
   imports = [
     inputs.haskell-flake.flakeModule
