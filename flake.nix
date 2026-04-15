@@ -2,7 +2,7 @@
   description = "Nix template for Haskell projects";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    haskell-flake.url = "github:srid/haskell-flake/standalone-lib";
+    haskell-flake.url = "github:srid/haskell-flake";
   };
 
   outputs = { nixpkgs, haskell-flake, ... }:
