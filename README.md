@@ -30,3 +30,7 @@ nix develop -c cabal run hint-demo
 # ghcid
 nix develop -c just run
 ```
+
+## Real-world uses
+
+- https://github.com/juspay/vira
