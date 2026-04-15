@@ -1,0 +1,31 @@
+{
+  "pins": {
+    "haskell-flake": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "srid",
+        "repo": "haskell-flake"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f364b4592eb70c8990a7efa6ad51c402c8283782",
+      "url": "https://github.com/srid/haskell-flake/archive/f364b4592eb70c8990a7efa6ad51c402c8283782.tar.gz",
+      "hash": "sha256-ftDMC/Xecm/ng53WkyG6XIxeoWki+VHgd93qge52GyI="
+    },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixpkgs-unstable",
+      "submodules": false,
+      "revision": "566acc07c54dc807f91625bb286cb9b321b5f42a",
+      "url": "https://github.com/nixos/nixpkgs/archive/566acc07c54dc807f91625bb286cb9b321b5f42a.tar.gz",
+      "hash": "sha256-psVTpH6PK3q1htMJpmdz1hLF5pQgEshu7gQWgKO6t6Y="
+    }
+  },
+  "version": 7
+}

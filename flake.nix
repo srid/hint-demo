@@ -1,21 +1,20 @@
 {
   description = "Nix template for Haskell projects";
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    haskell-flake.url = "github:srid/haskell-flake";
-  };
 
-  outputs = { nixpkgs, haskell-flake, ... }:
+  outputs = { ... }:
     let
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      lib = nixpkgs.lib;
+      sources = import ./npins;
+      lib = import (sources.nixpkgs + "/lib");
       root = ./.;
 
-      forAllSystems = f: lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      forAllSystems = f: lib.genAttrs systems (system:
+        f (import sources.nixpkgs { inherit system; })
+      );
 
       perSystem = pkgs:
         let
-          hflib = haskell-flake.lib { inherit pkgs; };
+          hflib = import "${sources.haskell-flake}/nix/lib.nix" { inherit pkgs; };
         in
         rec {
           project = hflib.evalHaskellProject {

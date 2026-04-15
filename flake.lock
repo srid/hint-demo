@@ -1,42 +1,6 @@
 {
   "nodes": {
-    "haskell-flake": {
-      "locked": {
-        "lastModified": 1776275952,
-        "narHash": "sha256-QGMU1DNVhr8BCUEen+8VitY/3Xd2NkoW8MSbFWoImxg=",
-        "owner": "srid",
-        "repo": "haskell-flake",
-        "rev": "559c0194e2ee9b0f0718aec96a57de93854871e8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "srid",
-        "repo": "haskell-flake",
-        "type": "github"
-      }
-    },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1776225522,
-        "narHash": "sha256-W2npO5nesUm68vECpC3Dl/IOzamvcGAu9uV38hou2yg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "975dad1a84d727dce241bb41b27191948fa5a956",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "root": {
-      "inputs": {
-        "haskell-flake": "haskell-flake",
-        "nixpkgs": "nixpkgs"
-      }
-    }
+    "root": {}
   },
   "root": "root",
   "version": 7
