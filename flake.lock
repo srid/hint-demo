@@ -1,36 +1,17 @@
 {
   "nodes": {
-    "flake-parts": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775087534,
-        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "haskell-flake": {
       "locked": {
-        "lastModified": 1776030284,
-        "narHash": "sha256-RlhVw9N6HlepLj2oityi2k8+H3hWkFQHsUIouCCfIo0=",
+        "lastModified": 1774715605,
+        "narHash": "sha256-JM+ojZgz5yJ9pVOGNWNL3YFTXJZyAhuDyQxLxBRDLts=",
         "owner": "srid",
         "repo": "haskell-flake",
-        "rev": "f6eed3c0c2ab8abb9fccd058092eba0a399513dd",
+        "rev": "36e943e960bb64d5acf7972aa9e2686995e8185c",
         "type": "github"
       },
       "original": {
         "owner": "srid",
+        "ref": "standalone-lib",
         "repo": "haskell-flake",
         "type": "github"
       }
@@ -53,7 +34,6 @@
     },
     "root": {
       "inputs": {
-        "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
         "nixpkgs": "nixpkgs"
       }
